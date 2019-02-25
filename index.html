@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"  />
+<title>For You</title>
+<link rel="icon" type="image/x-icon" href="images/1.png">
 <script type="text/javascript" src="style/js/jquery-3.3.1.min.js"></script>
 <style>
 body{
@@ -12,6 +15,16 @@ html{
 	margin:0px;
 	padding:0px;
 }
+.words{
+	text-align: center;
+	font-size: 20px;
+	color: #fff;
+	position: fixed;
+	top:50%;
+	margin-top: 9px;
+	left:50%;
+	margin-left: -80px;
+}
 </style>
 <script>
 var screeWidth;
@@ -21,11 +34,11 @@ var my_canvas;
 var context;  
  
 var size = 3;
-//»¡¶È³£Á¿
+//å¼§åº¦å¸¸é‡
 var  radis = Math.PI /180;
-//¾«ÁéÁ£×Ó,È«¾ÖµÄ
+//ç²¾çµç²’å­,å…¨å±€çš„
 var spriteArray = new Array();
-//´´½¨ÑÌ»¨¶ÓÁĞ
+//åˆ›å»ºçƒŸèŠ±é˜Ÿåˆ—
 var gloablYanhuaArray = new  Array();
 gloablYanhuaArray.push( YANHUAOBJ(800,400,50,size,0));
 gloablYanhuaArray.push( YANHUAOBJ(200,400,50,size,1));
@@ -44,9 +57,12 @@ $(function() {
 	setInterval("explod()",500);
 	window.addEventListener( 'resize', onWindowResize, false );
     });  
-// function onWindowResize(){
-// 	alert(1);
-// }
+// å½“çª—å£æ”¹å˜å¤§å°æ˜¯æ—¶è§¦å‘
+function onWindowResize(){
+	// alert(1);
+	// åˆ·æ–°é¡µé¢
+	location.reload()
+}
 function clearg(){
 	for(var i = 0; i< gloablYanhuaArray.length;i++){
 		if(gloablYanhuaArray[i].dead){
@@ -55,22 +71,22 @@ function clearg(){
 	}
 }
 function draw(){
-	//console.log("¾«Áé×ÜÊı£º"+spriteArray.length+",´óÑÌ»¨£º"+gloablYanhuaArray.length);
+	//console.log("ç²¾çµæ€»æ•°ï¼š"+spriteArray.length+",å¤§çƒŸèŠ±ï¼š"+gloablYanhuaArray.length);
 	clearg();
 	context.clearRect(0,0,my_canvas.width,my_canvas.height);
 	context.fillStyle   = "#fff";;
-	//context.fillText("µ±Ç°ÑÌ»¨Êı£º"+gloablYanhuaArray.length+",µ±Ç°Á£×ÓÊı£º"+spriteArray.length,100,100);
+	//context.fillText("å½“å‰çƒŸèŠ±æ•°ï¼š"+gloablYanhuaArray.length+",å½“å‰ç²’å­æ•°ï¼š"+spriteArray.length,100,100);
 	context.drawImage(getCatcheCanvas(),0,0,screeWidth,screeHeight);
 		
 }	
-//»º´æ»æÍ¼
+//ç¼“å­˜ç»˜å›¾
 function getCatcheCanvas(){
 	var canvas = document.createElement( 'canvas' );
 	canvas.width = screeWidth;
 	canvas.height = screeHeight;
 	var context = canvas.getContext( '2d' );
 	context.clearRect(0,0,canvas.width,canvas.height)
-	//»æÖÆÁ£×Ó
+	//ç»˜åˆ¶ç²’å­
 	for(var j=0;j<spriteArray.length;j++){
 	
 	var bb = spriteArray[j].color;
@@ -91,10 +107,10 @@ function getCatcheCanvas(){
 		}
 	}
 	
-		//»æÖÆÑÌ»¨
-	for(var j=0;j<gloablYanhuaArray.length;j++)//ÑÌ»¨¶ÓÁĞ
+		//ç»˜åˆ¶çƒŸèŠ±
+	for(var j=0;j<gloablYanhuaArray.length;j++)//çƒŸèŠ±é˜Ÿåˆ—
 		{	
-			for(var i=0;i<gloablYanhuaArray[j].yanhuaArray.length;i++)//Ã¿¸öÑÌ»¨
+			for(var i=0;i<gloablYanhuaArray[j].yanhuaArray.length;i++)//æ¯ä¸ªçƒŸèŠ±
 			{		
 				var bb = gloablYanhuaArray[j].yanhuaArray[i].color;
 				var color = bb.substring(0,bb.lastIndexOf(","))+","+gloablYanhuaArray[j].yanhuaArray[i].alpha+")";
@@ -121,7 +137,7 @@ function getCatcheCanvas(){
 		
 		return canvas;
 }
-//Éú³ÉÑÌ»¨ÌùÍ¼
+//ç”ŸæˆçƒŸèŠ±è´´å›¾
 function generateSprite(colorStr,alpha) {
  
 	var canvas = document.createElement( 'canvas' );
@@ -140,7 +156,7 @@ function generateSprite(colorStr,alpha) {
 	return canvas;
  
 } 
-//ÑÌ»¨¶ÔÏó
+//çƒŸèŠ±å¯¹è±¡
 function YANHUAOBJ(x,y,count,size,colormain){
  
 	var yanhua = new  Object();
@@ -193,11 +209,11 @@ function YANHUAOBJ(x,y,count,size,colormain){
 	yanhuaObj.orgX=x;
 	yanhuaObj.orgY=y;
 	yanhuaObj.size=size;
-	yanhuaObj.v = (Math.random()*10); //±¬Õ¨³õËÙ¶È
-	yanhuaObj.a = 0.07;//±¬Õ¨¼ÓËÙ¶È
-	yanhuaObj.angle = Math.floor(Math.random()*360) * radis;//Ëæ»ú»¡¶È
-	yanhuaObj.vx = yanhuaObj.v * Math.cos(yanhuaObj.angle); //Ë®Æ½·ÖËÙ¶È
-	yanhuaObj.vy = yanhuaObj.v * Math.sin(yanhuaObj.angle);//´¹Ö±·ÖËÙ¶È
+	yanhuaObj.v = (Math.random()*10); //çˆ†ç‚¸åˆé€Ÿåº¦
+	yanhuaObj.a = 0.07;//çˆ†ç‚¸åŠ é€Ÿåº¦
+	yanhuaObj.angle = Math.floor(Math.random()*360) * radis;//éšæœºå¼§åº¦
+	yanhuaObj.vx = yanhuaObj.v * Math.cos(yanhuaObj.angle); //æ°´å¹³åˆ†é€Ÿåº¦
+	yanhuaObj.vy = yanhuaObj.v * Math.sin(yanhuaObj.angle);//å‚ç›´åˆ†é€Ÿåº¦
 	
 	yanhuaObj.dirX=(Math.random()*10-5);
 	yanhuaObj.dirY=(Math.random()*10-5);
@@ -251,8 +267,8 @@ function YANHUAOBJ(x,y,count,size,colormain){
 		yanhuaObj.y+=0.4;
 		if(yanhuaObj.v>=0){
 			yanhuaObj.v += yanhuaObj.a-=0.02;
-			yanhuaObj.vx = yanhuaObj.v * Math.cos(yanhuaObj.angle); //Ë®Æ½·ÖËÙ¶È
-			yanhuaObj.vy = yanhuaObj.v * Math.sin(yanhuaObj.angle);//´¹Ö±·ÖËÙ¶È
+			yanhuaObj.vx = yanhuaObj.v * Math.cos(yanhuaObj.angle); //æ°´å¹³åˆ†é€Ÿåº¦
+			yanhuaObj.vy = yanhuaObj.v * Math.sin(yanhuaObj.angle);//å‚ç›´åˆ†é€Ÿåº¦
 			var disR=(yanhuaObj.x-yanhuaObj.orgX)*(yanhuaObj.x-yanhuaObj.orgX)+(yanhuaObj.y-yanhuaObj.orgY)*(yanhuaObj.y-yanhuaObj.orgY);
 			if(disR<56000){
 			//yanhuaObj.dirX=yanhuaObj.dirX*2;
@@ -278,7 +294,7 @@ function YANHUAOBJ(x,y,count,size,colormain){
 		}
 		
 	}
-	//ÊµÏÖÍÏÎ²£¬Ã¿100ºÁÃë²úÉúÒ»¸öÎ²°Í
+	//å®ç°æ‹–å°¾ï¼Œæ¯100æ¯«ç§’äº§ç”Ÿä¸€ä¸ªå°¾å·´
 	
 	yanhuaObj.tail=setInterval(function(){
 		
@@ -364,13 +380,27 @@ function sprite(x,y,size,color){
 	
 	return sprite;;
 }
+
 </script>
  
 </head>
 <body style="background-color:#fff;">
 <img id="tulip" src="lizi1.png" alt="The Tulip" style="display:none;" />
+<h2 class="words" id="dayss">é¥¶æ°ï¼Œæˆ‘ä»¬åœ¨ä¸€èµ·1å¤©äº†ã€‚</h2>
 <canvas id="myCanvas"  style="background:rgba(0, 0, 0, 1);" onmousemove="mousemove();" onmousedown="mousedown();">
 Your browser does not support the HTML5 canvas tag.
 </canvas>
 </body>
+<script type="text/javascript">
+	/*********é¡µé¢ä¸­é—´çš„æ–‡å­—*************/
+	// ç°åœ¨çš„æ—¶é—´
+	var nowtime=Date.parse(new Date());
+	// çºªå¿µæ—¥æ—¶é—´-1
+	var oldtime=Date.parse("2009-11-09");
+	// è·ä»Šå¤šå°‘å¤©
+	var days=parseInt((nowtime-oldtime)/(1000*60*60*24));
+
+	// æ”¹å˜æ–‡æœ¬å†…å®¹
+	document.getElementById("dayss").innerHTML = "é¥¶æ°ï¼Œæˆ‘ä»¬åœ¨ä¸€èµ·" + days + "å¤©äº†ã€‚"
+</script>
 </html>
